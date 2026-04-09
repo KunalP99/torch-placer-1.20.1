@@ -1,0 +1,8 @@
+{
+  "category.torch-placer": "Torch Placer",
+  "key.torch-placer.toggle": "Toggle Auto Torch",
+  "key.torch-placer.config": "Open Torch Placer Config",
+  "screen.torch-placer.title": "Torch Placer Settings",
+  "screen.torch-placer.save": "Save",
+  "screen.torch-placer.cancel": "Cancel"
+}
