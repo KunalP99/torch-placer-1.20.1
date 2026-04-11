@@ -29,10 +29,11 @@ public class TorchBagMenu extends AbstractContainerMenu {
                 TorchBagItem.saveInventory(playerInv.player.getItemInHand(hand), bagInventory));
 
         // 16 torch-only bag slots — 4 columns × 4 rows, centred horizontally
+        // Rows start at y=12 so row 4 ends at y=84, flush with player inventory
         for (int row = 0; row < 4; row++) {
             for (int col = 0; col < 4; col++) {
                 final int index = row * 4 + col;
-                addSlot(new Slot(bagInventory, index, 62 + col * 18, 17 + row * 18) {
+                addSlot(new Slot(bagInventory, index, 62 + col * 18, 12 + row * 18) {
                     @Override
                     public boolean mayPlace(ItemStack stack) {
                         return TorchBagItem.isTorch(stack);
@@ -41,16 +42,16 @@ public class TorchBagMenu extends AbstractContainerMenu {
             }
         }
 
-        // Player main inventory (slots 9–35 in Inventory)
+        // Player main inventory (slots 9–35 in Inventory) — y=84 matches shulker_box.png
         for (int row = 0; row < 3; row++) {
             for (int col = 0; col < 9; col++) {
-                addSlot(new Slot(playerInv, col + row * 9 + 9, 8 + col * 18, 97 + row * 18));
+                addSlot(new Slot(playerInv, col + row * 9 + 9, 8 + col * 18, 84 + row * 18));
             }
         }
 
-        // Hotbar (slots 0–8)
+        // Hotbar (slots 0–8) — y=142 matches shulker_box.png
         for (int col = 0; col < 9; col++) {
-            addSlot(new Slot(playerInv, col, 8 + col * 18, 155));
+            addSlot(new Slot(playerInv, col, 8 + col * 18, 142));
         }
     }
 

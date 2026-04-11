@@ -11,13 +11,13 @@ import torchplacer.TorchBagMenu;
 public class TorchBagScreen extends AbstractContainerScreen<TorchBagMenu> {
 
     private static final ResourceLocation TEXTURE =
-            new ResourceLocation("torch-placer", "textures/gui/torch_bag.png");
+            new ResourceLocation("minecraft", "textures/gui/container/shulker_box.png");
 
     public TorchBagScreen(TorchBagMenu menu, Inventory playerInventory, Component title) {
         super(menu, playerInventory, title);
         imageWidth = 176;
-        imageHeight = 179;
-        // Position the "Inventory" label above the player slots
+        imageHeight = 166; // matches shulker_box.png native height
+        // inventoryLabelY = 166 - 94 = 72, which is 12px above player inv at y=84
         inventoryLabelY = imageHeight - 94;
     }
 
