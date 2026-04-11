@@ -110,7 +110,9 @@ public class TorchPlacerLogic {
 
                     if (!world.getBlockState(pos).isAir()) continue;
 
-                    int light = world.getBrightness(LightLayer.BLOCK, pos);
+                    int blockLight = world.getBrightness(LightLayer.BLOCK, pos);
+                    int skyLight = world.getBrightness(LightLayer.SKY, pos);
+                    int light = Math.max(blockLight, skyLight - world.getSkyDarken());
                     if (light > config.lightThreshold) continue;
 
                     // Wall placement: horizontal neighbor with a sturdy face toward the torch
