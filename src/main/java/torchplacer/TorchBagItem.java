@@ -56,14 +56,14 @@ public class TorchBagItem extends Item {
     }
 
     public static SimpleContainer loadInventory(ItemStack bagStack) {
-        SimpleContainer container = new SimpleContainer(8);
+        SimpleContainer container = new SimpleContainer(16);
         CompoundTag tag = bagStack.getTag();
         if (tag != null && tag.contains("Inventory", Tag.TAG_COMPOUND)) {
             ListTag list = tag.getCompound("Inventory").getList("Items", Tag.TAG_COMPOUND);
             for (int i = 0; i < list.size(); i++) {
                 CompoundTag itemTag = list.getCompound(i);
                 int slot = itemTag.getByte("Slot") & 0xFF;
-                if (slot < 8) {
+                if (slot < 16) {
                     container.setItem(slot, ItemStack.of(itemTag));
                 }
             }
