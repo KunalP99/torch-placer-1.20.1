@@ -28,12 +28,11 @@ public class TorchBagMenu extends AbstractContainerMenu {
         bagInventory.addListener(inv ->
                 TorchBagItem.saveInventory(playerInv.player.getItemInHand(hand), bagInventory));
 
-        // 16 torch-only bag slots — 4 columns × 4 rows, centred horizontally
-        // Rows start at y=12 so row 4 ends at y=84, flush with player inventory
-        for (int row = 0; row < 4; row++) {
+        // 8 torch-only bag slots — 4 columns × 2 rows, centred horizontally
+        for (int row = 0; row < 2; row++) {
             for (int col = 0; col < 4; col++) {
                 final int index = row * 4 + col;
-                addSlot(new Slot(bagInventory, index, 62 + col * 18, 12 + row * 18) {
+                addSlot(new Slot(bagInventory, index, 52 + col * 18, 17 + row * 18) {
                     @Override
                     public boolean mayPlace(ItemStack stack) {
                         return TorchBagItem.isTorch(stack);
@@ -42,16 +41,16 @@ public class TorchBagMenu extends AbstractContainerMenu {
             }
         }
 
-        // Player main inventory (slots 9–35 in Inventory) — y=84 matches shulker_box.png
+        // Player main inventory (slots 9–35 in Inventory)
         for (int row = 0; row < 3; row++) {
             for (int col = 0; col < 9; col++) {
-                addSlot(new Slot(playerInv, col + row * 9 + 9, 8 + col * 18, 84 + row * 18));
+                addSlot(new Slot(playerInv, col + row * 9 + 9, 8 + col * 18, 51 + row * 18));
             }
         }
 
-        // Hotbar (slots 0–8) — y=142 matches shulker_box.png
+        // Hotbar (slots 0–8)
         for (int col = 0; col < 9; col++) {
-            addSlot(new Slot(playerInv, col, 8 + col * 18, 142));
+            addSlot(new Slot(playerInv, col, 8 + col * 18, 109));
         }
     }
 
@@ -67,21 +66,21 @@ public class TorchBagMenu extends AbstractContainerMenu {
 
     @Override
     public ItemStack quickMoveStack(Player player, int index) {
-        // Slots 0-15  = bag inventory
-        // Slots 16-51 = player main inventory + hotbar
+        // Slots 0-7  = bag inventory
+        // Slots 8-43 = player main inventory + hotbar
         Slot slot = slots.get(index);
         if (!slot.hasItem()) return ItemStack.EMPTY;
 
         ItemStack stack = slot.getItem();
         ItemStack original = stack.copy();
 
-        if (index < 16) {
+        if (index < 8) {
             // Bag → player inventory (prefer main inv, then hotbar)
-            if (!moveItemStackTo(stack, 16, 52, true)) return ItemStack.EMPTY;
+            if (!moveItemStackTo(stack, 8, 44, true)) return ItemStack.EMPTY;
         } else {
             // Player → bag (only torches)
             if (!TorchBagItem.isTorch(stack)) return ItemStack.EMPTY;
-            if (!moveItemStackTo(stack, 0, 16, false)) return ItemStack.EMPTY;
+            if (!moveItemStackTo(stack, 0, 8, false)) return ItemStack.EMPTY;
         }
 
         if (stack.isEmpty()) slot.set(ItemStack.EMPTY);
