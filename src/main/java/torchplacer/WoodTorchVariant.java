@@ -1,7 +1,6 @@
 package torchplacer;
 
 public enum WoodTorchVariant {
-    OAK      ("oak"),
     SPRUCE   ("spruce"),
     BIRCH    ("birch"),
     JUNGLE   ("jungle"),
