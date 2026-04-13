@@ -194,7 +194,8 @@ public class TorchPlacerLogic {
             } else {
                 BlockPos current = HELD_LIGHT_POSITIONS.remove(uuid);
                 if (current != null) clearLightBlock(world, current);
-                toFlush.remove(uuid);
+                BlockPos deferred = toFlush.remove(uuid);
+                if (deferred != null) clearLightBlock(world, deferred);
                 DEFERRED_CLEARS.remove(uuid);
             }
         }
