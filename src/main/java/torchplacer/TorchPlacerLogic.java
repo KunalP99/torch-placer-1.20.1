@@ -190,7 +190,7 @@ public class TorchPlacerLogic {
                         HELD_LIGHT_POSITIONS.put(uuid, target);
                     }
                 }
-                toFlush.remove(uuid); // keep old-old light alive until after new is sent
+
             } else {
                 BlockPos current = HELD_LIGHT_POSITIONS.remove(uuid);
                 if (current != null) clearLightBlock(world, current);
