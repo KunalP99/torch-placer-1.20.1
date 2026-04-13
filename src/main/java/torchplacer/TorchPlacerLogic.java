@@ -30,7 +30,7 @@ public class TorchPlacerLogic {
 
     public static final Map<UUID, BlockPos> HELD_LIGHT_POSITIONS = new HashMap<>();
     public static final Map<UUID, BlockPos> DEFERRED_CLEARS = new HashMap<>();
-    private static final int TORCH_LIGHT_LEVEL = 14;
+    private static final Map<UUID, Integer> HELD_LIGHT_LEVELS = new HashMap<>();
     private static final int SCAN_RADIUS = 4;
 
     public static void tick(MinecraftServer server) {
@@ -197,19 +197,27 @@ public class TorchPlacerLogic {
         DEFERRED_CLEARS.clear();
 
         for (ServerPlayer player : server.getPlayerList().getPlayers()) {
-            boolean holding = TorchBagItem.isTorch(player.getMainHandItem())
-                           || TorchBagItem.isTorch(player.getOffhandItem());
+            ItemStack mainHand = player.getMainHandItem();
+            ItemStack offHand = player.getOffhandItem();
+            boolean holdingMain = TorchBagItem.isTorch(mainHand);
+            boolean holdingOff  = TorchBagItem.isTorch(offHand);
+            boolean holding = holdingMain || holdingOff;
             UUID uuid = player.getUUID();
             ServerLevel world = (ServerLevel) player.level();
 
             if (holding) {
+                int lightLevel = TorchBagItem.getTorchLightLevel(holdingMain ? mainHand : offHand);
                 BlockPos target = findLightPos(player, world);
                 if (target != null) {
                     BlockPos current = HELD_LIGHT_POSITIONS.get(uuid);
-                    if (!target.equals(current)) {
-                        placeLightBlock(world, target);
-                        if (current != null) DEFERRED_CLEARS.put(uuid, current);
+                    int currentLevel = HELD_LIGHT_LEVELS.getOrDefault(uuid, -1);
+                    boolean posChanged   = !target.equals(current);
+                    boolean levelChanged = lightLevel != currentLevel;
+                    if (posChanged || levelChanged) {
+                        placeLightBlock(world, target, lightLevel);
+                        if (posChanged && current != null) DEFERRED_CLEARS.put(uuid, current);
                         HELD_LIGHT_POSITIONS.put(uuid, target);
+                        HELD_LIGHT_LEVELS.put(uuid, lightLevel);
                     }
                 }
 
@@ -219,6 +227,7 @@ public class TorchPlacerLogic {
                 BlockPos deferred = toFlush.remove(uuid);
                 if (deferred != null) clearLightBlock(world, deferred);
                 DEFERRED_CLEARS.remove(uuid);
+                HELD_LIGHT_LEVELS.remove(uuid);
             }
         }
 
@@ -245,9 +254,9 @@ public class TorchPlacerLogic {
         }
     }
 
-    private static void placeLightBlock(ServerLevel world, BlockPos pos) {
+    private static void placeLightBlock(ServerLevel world, BlockPos pos, int level) {
         world.setBlock(pos, Blocks.LIGHT.defaultBlockState()
-                .setValue(LightBlock.LEVEL, TORCH_LIGHT_LEVEL), 3);
+                .setValue(LightBlock.LEVEL, level), 3);
     }
 
 }
