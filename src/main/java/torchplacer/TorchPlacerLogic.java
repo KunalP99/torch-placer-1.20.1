@@ -192,9 +192,11 @@ public class TorchPlacerLogic {
 
     private static BlockPos findLightPos(ServerPlayer player, ServerLevel world) {
         BlockPos feet = player.blockPosition();
-        if (world.getBlockState(feet).isAir()) return feet;
+        var feetState = world.getBlockState(feet);
+        if (feetState.isAir() || feetState.is(Blocks.LIGHT)) return feet;
         BlockPos head = feet.above();
-        if (world.getBlockState(head).isAir()) return head;
+        var headState = world.getBlockState(head);
+        if (headState.isAir() || headState.is(Blocks.LIGHT)) return head;
         return null;
     }
 
