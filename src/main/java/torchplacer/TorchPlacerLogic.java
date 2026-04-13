@@ -25,6 +25,7 @@ import java.util.UUID;
 public class TorchPlacerLogic {
 
     public static final Map<UUID, BlockPos> HELD_LIGHT_POSITIONS = new HashMap<>();
+    public static final Map<UUID, BlockPos> DEFERRED_CLEARS = new HashMap<>();
     private static final int TORCH_LIGHT_LEVEL = 14;
 
     public static void tick(MinecraftServer server) {
@@ -167,6 +168,16 @@ public class TorchPlacerLogic {
     }
 
     private static void tickDynamicLighting(MinecraftServer server) {
+        // Flush deferred clears from the previous tick — old light stays alive one extra tick
+        // so there is never a dark gap when transitioning to a new position.
+        if (!DEFERRED_CLEARS.isEmpty()) {
+            DEFERRED_CLEARS.forEach((uuid, pos) -> {
+                ServerPlayer p = server.getPlayerList().getPlayer(uuid);
+                if (p != null) clearLightBlock((ServerLevel) p.level(), pos);
+            });
+            DEFERRED_CLEARS.clear();
+        }
+
         for (ServerPlayer player : server.getPlayerList().getPlayers()) {
             boolean holding = TorchBagItem.isTorch(player.getMainHandItem())
                            || TorchBagItem.isTorch(player.getOffhandItem());
@@ -179,13 +190,14 @@ public class TorchPlacerLogic {
                     BlockPos current = HELD_LIGHT_POSITIONS.get(uuid);
                     if (!target.equals(current)) {
                         placeLightBlock(world, target);
-                        if (current != null) clearLightBlock(world, current);
+                        if (current != null) DEFERRED_CLEARS.put(uuid, current);
                         HELD_LIGHT_POSITIONS.put(uuid, target);
                     }
                 }
             } else {
                 BlockPos current = HELD_LIGHT_POSITIONS.remove(uuid);
                 if (current != null) clearLightBlock(world, current);
+                DEFERRED_CLEARS.remove(uuid);
             }
         }
     }

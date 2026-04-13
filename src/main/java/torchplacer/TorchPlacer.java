@@ -27,9 +27,14 @@ public class TorchPlacer implements ModInitializer {
         ServerTickEvents.END_SERVER_TICK.register(TorchPlacerLogic::tick);
         ServerPlayConnectionEvents.DISCONNECT.register((handler, server) -> {
             ServerPlayer player = handler.getPlayer();
+            ServerLevel world = (ServerLevel) player.level();
             BlockPos lightPos = TorchPlacerLogic.HELD_LIGHT_POSITIONS.remove(player.getUUID());
             if (lightPos != null) {
-                TorchPlacerLogic.clearLightBlock((ServerLevel) player.level(), lightPos);
+                TorchPlacerLogic.clearLightBlock(world, lightPos);
+            }
+            BlockPos deferredPos = TorchPlacerLogic.DEFERRED_CLEARS.remove(player.getUUID());
+            if (deferredPos != null) {
+                TorchPlacerLogic.clearLightBlock(world, deferredPos);
             }
         });
         LOGGER.info("Torch Placer initialized.");
