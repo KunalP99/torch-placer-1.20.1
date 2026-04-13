@@ -50,6 +50,7 @@ public class TorchBagItem extends Item {
     public static boolean isTorch(ItemStack stack) {
         if (stack.is(Items.TORCH)) return true;
         if (stack.is(Items.SOUL_TORCH)) return true;
+        if (stack.is(Items.REDSTONE_TORCH)) return true;
         for (WoodTorchVariant v : WoodTorchVariant.values()) {
             if (stack.is(ModItems.ITEMS.get(v))) return true;
         }
@@ -59,6 +60,7 @@ public class TorchBagItem extends Item {
     /** Returns the held-light level that should be emitted by this torch item. */
     public static int getTorchLightLevel(ItemStack stack) {
         if (stack.is(Items.SOUL_TORCH)) return 10;
+        if (stack.is(Items.REDSTONE_TORCH)) return 7;
         return 14;
     }
 
