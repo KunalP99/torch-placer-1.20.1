@@ -14,9 +14,9 @@ A Fabric mod for Minecraft 1.20.1 that automatically places torches in dark area
 
 | Feature | Summary |
 |---------|---------|
-| Auto-placement | Places torches in dark spots near you every 2 seconds |
+| Auto-placement | Places torches in spots below your light threshold every 2 seconds |
 | Dynamic lighting | Holding any torch illuminates the area around you |
-| Torch Bag | Dedicated storage bag that holds up to 27 torches |
+| Torch Bag | Dedicated storage bag that holds up to 27 stacks of torches |
 | Wood-variant torches | 11 custom torch types, one per wood type |
 | Configurable | Light threshold, placement surface, and torch source |
 
