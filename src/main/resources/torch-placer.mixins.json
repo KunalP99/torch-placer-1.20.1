@@ -3,8 +3,7 @@
 	"package": "torchplacer.mixin",
 	"compatibilityLevel": "JAVA_17",
 	"mixins": [
-		"ExampleMixin",
-		"WolfMixin"
+		"ExampleMixin"
 	],
 	"injectors": {
 		"defaultRequire": 1

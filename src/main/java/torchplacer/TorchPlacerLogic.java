@@ -35,7 +35,6 @@ public class TorchPlacerLogic {
 
     public static void tick(MinecraftServer server) {
         tickDynamicLighting(server);
-        WolfTorchManager.tick(server);
         if (server.getTickCount() % 40 != 0) return;
 
         List<ServerPlayer> players = new ArrayList<>(server.getPlayerList().getPlayers());
@@ -255,7 +254,7 @@ public class TorchPlacerLogic {
         }
     }
 
-    public static void placeLightBlock(ServerLevel world, BlockPos pos, int level) {
+    private static void placeLightBlock(ServerLevel world, BlockPos pos, int level) {
         world.setBlock(pos, Blocks.LIGHT.defaultBlockState()
                 .setValue(LightBlock.LEVEL, level), 3);
     }
