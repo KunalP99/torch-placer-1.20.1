@@ -1,7 +1,6 @@
 {
   "values": [
     "minecraft:torch",
-    "torch-placer:oak_torch",
     "torch-placer:spruce_torch",
     "torch-placer:birch_torch",
     "torch-placer:jungle_torch",
