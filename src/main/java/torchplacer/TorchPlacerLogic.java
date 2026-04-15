@@ -80,20 +80,10 @@ public class TorchPlacerLogic {
             for (int i = 0; i < inv.getContainerSize(); i++) {
                 ItemStack stack = inv.getItem(i);
                 if (stack.getItem() instanceof TorchBagItem) continue; // don't consume the bag itself
-                if (stack.is(Items.TORCH)) {
-                    final int slot = i;
-                    return new TorchEntry(
-                            () -> player.getInventory().getItem(slot).shrink(1),
-                            Blocks.TORCH, Blocks.WALL_TORCH);
-                }
-                for (WoodTorchVariant v : WoodTorchVariant.values()) {
-                    if (stack.is(ModItems.ITEMS.get(v))) {
-                        final int slot = i;
-                        return new TorchEntry(
-                                () -> player.getInventory().getItem(slot).shrink(1),
-                                ModBlocks.FLOOR.get(v), ModBlocks.WALL.get(v));
-                    }
-                }
+                Block[] pair = getTorchBlocks(stack);
+                if (pair == null) continue;
+                final int slot = i;
+                return new TorchEntry(() -> player.getInventory().getItem(slot).shrink(1), pair[0], pair[1]);
             }
         }
 
@@ -102,6 +92,7 @@ public class TorchPlacerLogic {
 
     private static Block[] getTorchBlocks(ItemStack stack) {
         if (stack.is(Items.TORCH)) return new Block[]{Blocks.TORCH, Blocks.WALL_TORCH};
+        if (stack.is(ModItems.UNDERWATER_TORCH)) return new Block[]{ModBlocks.UNDERWATER_FLOOR, ModBlocks.UNDERWATER_WALL};
         for (WoodTorchVariant v : WoodTorchVariant.values())
             if (stack.is(ModItems.ITEMS.get(v)))
                 return new Block[]{ModBlocks.FLOOR.get(v), ModBlocks.WALL.get(v)};

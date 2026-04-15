@@ -51,6 +51,7 @@ public class TorchBagItem extends Item {
         if (stack.is(Items.TORCH)) return true;
         if (stack.is(Items.SOUL_TORCH)) return true;
         if (stack.is(Items.REDSTONE_TORCH)) return true;
+        if (stack.is(ModItems.UNDERWATER_TORCH)) return true;
         for (WoodTorchVariant v : WoodTorchVariant.values()) {
             if (stack.is(ModItems.ITEMS.get(v))) return true;
         }

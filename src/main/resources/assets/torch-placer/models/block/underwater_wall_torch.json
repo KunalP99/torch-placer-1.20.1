@@ -1,0 +1,4 @@
+{
+  "parent": "torch-placer:block/template_wood_torch_wall",
+  "textures": { "torch": "torch-placer:block/underwater_torch" }
+}

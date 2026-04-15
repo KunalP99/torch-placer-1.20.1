@@ -15,6 +15,7 @@ import java.util.EnumMap;
 public class ModItems {
     public static final EnumMap<WoodTorchVariant, Item> ITEMS = new EnumMap<>(WoodTorchVariant.class);
     public static Item TORCH_BAG;
+    public static Item UNDERWATER_TORCH;
 
     public static void register() {
         TORCH_BAG = new TorchBagItem(new Item.Properties().stacksTo(1));
@@ -33,11 +34,18 @@ public class ModItems {
             ITEMS.put(v, item);
         }
 
-        // Add torch bag + wood torches to the Tools & Utilities tab, after vanilla torch
+        UNDERWATER_TORCH = new StandingAndWallBlockItem(
+                ModBlocks.UNDERWATER_FLOOR, ModBlocks.UNDERWATER_WALL,
+                new Item.Properties(), Direction.DOWN);
+        Registry.register(BuiltInRegistries.ITEM,
+                new ResourceLocation(TorchPlacer.MOD_ID, "underwater_torch"), UNDERWATER_TORCH);
+
+        // Add torch bag + wood torches + underwater torch to the Tools & Utilities tab, after vanilla torch
         Item[] woodTorches = ITEMS.values().toArray(new Item[0]);
         ItemGroupEvents.modifyEntriesEvent(CreativeModeTabs.TOOLS_AND_UTILITIES).register(entries -> {
             entries.addAfter(Items.TORCH, woodTorches);
             entries.addAfter(Items.TORCH, TORCH_BAG);
+            entries.addAfter(Items.TORCH, UNDERWATER_TORCH);
         });
     }
 }

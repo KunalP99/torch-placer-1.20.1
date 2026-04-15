@@ -15,6 +15,9 @@ public class ModBlocks {
     public static final EnumMap<WoodTorchVariant, TorchBlock>    FLOOR = new EnumMap<>(WoodTorchVariant.class);
     public static final EnumMap<WoodTorchVariant, WallTorchBlock> WALL  = new EnumMap<>(WoodTorchVariant.class);
 
+    public static UnderwaterTorchBlock     UNDERWATER_FLOOR;
+    public static UnderwaterWallTorchBlock UNDERWATER_WALL;
+
     public static void register() {
         BlockBehaviour.Properties props = BlockBehaviour.Properties.copy(Blocks.TORCH);
 
@@ -30,5 +33,14 @@ public class ModBlocks {
             FLOOR.put(v, floor);
             WALL.put(v, wall);
         }
+
+        UnderwaterTorchBlock uwFloor = new UnderwaterTorchBlock(props, ParticleTypes.FLAME);
+        UnderwaterWallTorchBlock uwWall = new UnderwaterWallTorchBlock(props, ParticleTypes.FLAME);
+        Registry.register(BuiltInRegistries.BLOCK,
+                new ResourceLocation(TorchPlacer.MOD_ID, "underwater_torch"), uwFloor);
+        Registry.register(BuiltInRegistries.BLOCK,
+                new ResourceLocation(TorchPlacer.MOD_ID, "underwater_wall_torch"), uwWall);
+        UNDERWATER_FLOOR = uwFloor;
+        UNDERWATER_WALL  = uwWall;
     }
 }

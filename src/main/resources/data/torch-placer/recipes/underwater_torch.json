@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    { "item": "minecraft:torch" },
+    { "item": "minecraft:dried_kelp" }
+  ],
+  "result": { "item": "torch-placer:underwater_torch", "count": 1 }
+}

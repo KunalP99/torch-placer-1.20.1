@@ -5,17 +5,16 @@
   "screen.torch-placer.title": "Torch Placer Settings",
   "screen.torch-placer.save": "Save",
   "screen.torch-placer.cancel": "Cancel",
-
-  "item.torch-placer.torch_bag":      "Torch Bag",
-
-  "block.torch-placer.spruce_torch":   "Spruce Torch",
-  "block.torch-placer.birch_torch":    "Birch Torch",
-  "block.torch-placer.jungle_torch":   "Jungle Torch",
-  "block.torch-placer.acacia_torch":   "Acacia Torch",
+  "item.torch-placer.torch_bag": "Torch Bag",
+  "block.torch-placer.spruce_torch": "Spruce Torch",
+  "block.torch-placer.birch_torch": "Birch Torch",
+  "block.torch-placer.jungle_torch": "Jungle Torch",
+  "block.torch-placer.acacia_torch": "Acacia Torch",
   "block.torch-placer.dark_oak_torch": "Dark Oak Torch",
   "block.torch-placer.mangrove_torch": "Mangrove Torch",
-  "block.torch-placer.cherry_torch":   "Cherry Torch",
-  "block.torch-placer.bamboo_torch":   "Bamboo Torch",
-  "block.torch-placer.crimson_torch":  "Crimson Torch",
-  "block.torch-placer.warped_torch":   "Warped Torch"
+  "block.torch-placer.cherry_torch": "Cherry Torch",
+  "block.torch-placer.bamboo_torch": "Bamboo Torch",
+  "block.torch-placer.crimson_torch": "Crimson Torch",
+  "block.torch-placer.warped_torch": "Warped Torch",
+  "block.torch-placer.underwater_torch": "Underwater Torch"
 }

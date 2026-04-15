@@ -26,6 +26,8 @@ public class TorchPlacerClient implements ClientModInitializer {
             BlockRenderLayerMap.INSTANCE.putBlock(ModBlocks.FLOOR.get(v), RenderType.cutout());
             BlockRenderLayerMap.INSTANCE.putBlock(ModBlocks.WALL.get(v), RenderType.cutout());
         }
+        BlockRenderLayerMap.INSTANCE.putBlock(ModBlocks.UNDERWATER_FLOOR, RenderType.cutout());
+        BlockRenderLayerMap.INSTANCE.putBlock(ModBlocks.UNDERWATER_WALL,  RenderType.cutout());
 
         MenuScreens.register(TorchBagMenu.TYPE, TorchBagScreen::new);
 

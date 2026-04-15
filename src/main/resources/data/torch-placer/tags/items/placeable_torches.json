@@ -10,6 +10,7 @@
     "torch-placer:cherry_torch",
     "torch-placer:bamboo_torch",
     "torch-placer:crimson_torch",
-    "torch-placer:warped_torch"
+    "torch-placer:warped_torch",
+    "torch-placer:underwater_torch"
   ]
 }
