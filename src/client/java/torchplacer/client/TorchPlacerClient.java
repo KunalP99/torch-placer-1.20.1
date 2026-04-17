@@ -51,7 +51,7 @@ public class TorchPlacerClient implements ClientModInitializer {
             ItemStack offHand  = client.player.getOffhandItem();
             boolean mainSoul = mainHand.is(Items.SOUL_TORCH);
             boolean offSoul  = offHand.is(Items.SOUL_TORCH);
-            if ((mainSoul || offSoul) && ++particleTick % 5 == 0) {
+            if ((mainSoul || offSoul) && ++particleTick % 10 == 0) {
                 var eye  = client.player.getEyePosition();
                 var look = client.player.getLookAngle();
                 var rand = client.player.getRandom();
