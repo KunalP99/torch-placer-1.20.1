@@ -49,16 +49,18 @@ public class TorchPlacerClient implements ClientModInitializer {
 
             ItemStack mainHand = client.player.getMainHandItem();
             ItemStack offHand  = client.player.getOffhandItem();
-            if ((mainHand.is(Items.SOUL_TORCH) || offHand.is(Items.SOUL_TORCH)) && ++particleTick % 3 == 0) {
+            if ((mainHand.is(Items.SOUL_TORCH) || offHand.is(Items.SOUL_TORCH)) && ++particleTick % 5 == 0) {
                 var pos  = client.player.position();
+                var look = client.player.getLookAngle();
                 var rand = client.player.getRandom();
-                for (int i = 0; i < 4; i++) {
-                    double ox = (rand.nextDouble() - 0.5) * 1.2;
-                    double oy =  rand.nextDouble() * 2.0;
-                    double oz = (rand.nextDouble() - 0.5) * 1.2;
-                    client.level.addParticle(ParticleTypes.SOUL_FIRE_FLAME,
-                            pos.x + ox, pos.y + oy, pos.z + oz, 0.0, 0.04, 0.0);
-                }
+                double tx = pos.x + look.x * 0.5;
+                double ty = pos.y + 1.0;
+                double tz = pos.z + look.z * 0.5;
+                client.level.addParticle(ParticleTypes.SOUL_FIRE_FLAME,
+                        tx + (rand.nextDouble() - 0.5) * 0.15,
+                        ty + (rand.nextDouble() - 0.5) * 0.15,
+                        tz + (rand.nextDouble() - 0.5) * 0.15,
+                        0.0, 0.04, 0.0);
             }
 
             if (KeyBindings.KEY_TOGGLE.consumeClick()) {
