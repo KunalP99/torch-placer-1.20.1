@@ -112,11 +112,11 @@ The **Underwater Torch** is a special torch that can be placed in and survives c
 ### Crafting
 
 ```
-[ Torch    ]
+[ Any Torch ]
 [ Dried Kelp ]
 ```
 
-Shapeless — place a vanilla torch and a dried kelp anywhere in the crafting grid. Yields 1 underwater torch.
+Shapeless — place any torch (vanilla or any wood-variant) and a dried kelp anywhere in the crafting grid. Yields 1 underwater torch.
 
 ---
 

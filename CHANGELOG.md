@@ -1,5 +1,12 @@
 # Torch It Up — Changelog
 
+## 2026-04-17 (2)
+
+### Underwater Torch
+- The underwater torch can now be crafted using any wood-variant torch in addition to the vanilla torch
+
+---
+
 ## 2026-04-17
 
 ### Config Screen

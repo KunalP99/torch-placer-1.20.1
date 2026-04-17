@@ -2,7 +2,7 @@
   "type": "minecraft:crafting_shapeless",
   "category": "misc",
   "ingredients": [
-    { "item": "minecraft:torch" },
+    { "tag": "torch-placer:placeable_torches" },
     { "item": "minecraft:dried_kelp" }
   ],
   "result": { "item": "torch-placer:underwater_torch", "count": 1 }
