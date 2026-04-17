@@ -13,6 +13,7 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.LightBlock;
 import net.minecraft.world.level.block.WallTorchBlock;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
@@ -103,6 +104,7 @@ public class TorchPlacerLogic {
         TorchEntry entry = findTorchEntry(player, config.torchSource);
         if (entry == null) return;
 
+        boolean isUnderwater = entry.floor() instanceof UnderwaterTorchBlock;
         ServerLevel world = (ServerLevel) player.level();
         BlockPos playerPos = player.blockPosition();
         Direction facing = player.getDirection();
@@ -117,7 +119,9 @@ public class TorchPlacerLogic {
                 for (int dz = -SCAN_RADIUS; dz <= SCAN_RADIUS; dz++) {
                     BlockPos pos = playerPos.offset(dx, dy, dz);
 
-                    if (!world.getBlockState(pos).isAir()) continue;
+                    var posState = world.getBlockState(pos);
+                    boolean posIsWater = posState.is(Blocks.WATER);
+                    if (!posState.isAir() && !(isUnderwater && posIsWater)) continue;
 
                     int blockLight = world.getBrightness(LightLayer.BLOCK, pos);
                     int skyLight = world.getBrightness(LightLayer.SKY, pos);
@@ -159,11 +163,15 @@ public class TorchPlacerLogic {
         );
 
         best.ifPresent(c -> {
+            boolean inWater = isUnderwater && world.getBlockState(c.pos()).is(Blocks.WATER);
             if (c.isWall()) {
-                world.setBlock(c.pos(),
-                        entry.wall().defaultBlockState().setValue(WallTorchBlock.FACING, c.wallFacing()), 3);
+                BlockState state = entry.wall().defaultBlockState().setValue(WallTorchBlock.FACING, c.wallFacing());
+                if (inWater) state = state.setValue(UnderwaterWallTorchBlock.WATERLOGGED, true);
+                world.setBlock(c.pos(), state, 3);
             } else {
-                world.setBlock(c.pos(), entry.floor().defaultBlockState(), 3);
+                BlockState state = entry.floor().defaultBlockState();
+                if (inWater) state = state.setValue(UnderwaterTorchBlock.WATERLOGGED, true);
+                world.setBlock(c.pos(), state, 3);
             }
             entry.consume().run();
         });
