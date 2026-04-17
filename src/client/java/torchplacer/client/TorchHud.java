@@ -17,7 +17,7 @@ public class TorchHud {
         int count = countTorches(client, TorchPlacerClient.CONFIG.torchSource);
         int color = count > 15 ? 0xFFFFFF : count > 5 ? 0xFFFF55 : 0xFF5555;
 
-        int x = client.getWindow().getGuiScaledWidth() - 26;
+        int x = client.getWindow().getGuiScaledWidth() - 44;
         int y = client.getWindow().getGuiScaledHeight() - 55;
 
         graphics.renderItem(new ItemStack(Items.TORCH), x, y);
