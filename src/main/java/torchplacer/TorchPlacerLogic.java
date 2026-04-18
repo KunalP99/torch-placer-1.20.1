@@ -16,6 +16,7 @@ import net.minecraft.world.level.block.WallTorchBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.material.Fluids;
+import torchplacer.ModItems;
 import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
@@ -199,13 +200,16 @@ public class TorchPlacerLogic {
         DEFERRED_CLEARS.clear();
 
         for (ServerPlayer player : server.getPlayerList().getPlayers()) {
-            ItemStack mainHand = player.getMainHandItem();
-            ItemStack offHand = player.getOffhandItem();
-            boolean holdingMain = TorchBagItem.isTorch(mainHand);
-            boolean holdingOff  = TorchBagItem.isTorch(offHand);
-            boolean holding = holdingMain || holdingOff;
             UUID uuid = player.getUUID();
             ServerLevel world = (ServerLevel) player.level();
+            ItemStack mainHand = player.getMainHandItem();
+            ItemStack offHand = player.getOffhandItem();
+            boolean playerSubmerged = world.getFluidState(player.blockPosition()).getType() == Fluids.WATER;
+            boolean holdingMain = TorchBagItem.isTorch(mainHand)
+                    && (!playerSubmerged || mainHand.is(ModItems.UNDERWATER_TORCH));
+            boolean holdingOff  = TorchBagItem.isTorch(offHand)
+                    && (!playerSubmerged || offHand.is(ModItems.UNDERWATER_TORCH));
+            boolean holding = holdingMain || holdingOff;
 
             if (holding) {
                 int lightLevel = TorchBagItem.getTorchLightLevel(holdingMain ? mainHand : offHand);
