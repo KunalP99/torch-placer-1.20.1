@@ -56,8 +56,11 @@ While you hold a torch in your main hand or offhand, the mod places an invisible
 | Regular torch / wood-variant torches | 14 |
 | Soul torch | 10 |
 | Redstone torch | 7 |
+| Underwater torch (submerged only) | 14 |
 
 The light updates as you move and disappears the moment you put the torch away. Switching between torch types (e.g. regular → soul torch) instantly adjusts the brightness.
+
+Regular torches do not provide dynamic lighting when you are submerged. The underwater torch only provides dynamic lighting when you are submerged.
 
 ---
 
@@ -106,8 +109,10 @@ Place the matching wood plank directly above a vanilla torch. Yields 1 wood torc
 The **Underwater Torch** is a special torch that can be placed in and survives contact with water. Normal torches pop off when water flows over them — the underwater torch stays put.
 
 - Shows bubble particles when submerged instead of the usual flame
-- Fully supported by the auto-placer (placed in water blocks as well as air)
+- **Can only be placed in water** — attempting to place it in air or on dry land does nothing
+- Fully supported by the auto-placer (placed in water blocks only)
 - Works inside the Torch Bag
+- Provides dynamic hand-held lighting **only when the player is submerged**
 
 ### Crafting
 
