@@ -4,6 +4,7 @@
 
 ### Underwater Torch
 - The underwater torch can no longer be manually placed outside of water — attempting to place it in air or on dry land will do nothing
+- Holding an underwater torch no longer illuminates the area above water — dynamic lighting only activates when the player is submerged
 
 ### Commands
 - Added `/torchesplaced` command — shows how many torches you have placed in this world (both manually and by the auto-placer). The count persists across death, logout, and server restarts

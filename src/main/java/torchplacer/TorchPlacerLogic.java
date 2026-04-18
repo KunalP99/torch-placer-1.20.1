@@ -206,9 +206,9 @@ public class TorchPlacerLogic {
             ItemStack offHand = player.getOffhandItem();
             boolean playerSubmerged = world.getFluidState(player.blockPosition()).getType() == Fluids.WATER;
             boolean holdingMain = TorchBagItem.isTorch(mainHand)
-                    && (!playerSubmerged || mainHand.is(ModItems.UNDERWATER_TORCH));
+                    && (mainHand.is(ModItems.UNDERWATER_TORCH) ? playerSubmerged : !playerSubmerged);
             boolean holdingOff  = TorchBagItem.isTorch(offHand)
-                    && (!playerSubmerged || offHand.is(ModItems.UNDERWATER_TORCH));
+                    && (offHand.is(ModItems.UNDERWATER_TORCH) ? playerSubmerged : !playerSubmerged);
             boolean holding = holdingMain || holdingOff;
 
             if (holding) {
