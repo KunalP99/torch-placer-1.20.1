@@ -12,6 +12,7 @@
 
 ### Underwater Torch
 - The underwater torch can now be crafted using any wood-variant torch in addition to the vanilla torch
+- Holding an underwater torch now illuminates the surrounding area while submerged (dynamic lighting now works in water)
 
 ---
 

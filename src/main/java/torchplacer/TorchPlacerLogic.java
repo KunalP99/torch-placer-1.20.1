@@ -14,6 +14,8 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.LightBlock;
 import net.minecraft.world.level.block.WallTorchBlock;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
@@ -238,25 +240,33 @@ public class TorchPlacerLogic {
         });
     }
 
+    private static boolean isValidLightPos(BlockState state) {
+        if (state.isAir() || state.is(Blocks.LIGHT)) return true;
+        return state.getFluidState().getType() == Fluids.WATER;
+    }
+
     private static BlockPos findLightPos(ServerPlayer player, ServerLevel world) {
         BlockPos feet = player.blockPosition();
-        var feetState = world.getBlockState(feet);
-        if (feetState.isAir() || feetState.is(Blocks.LIGHT)) return feet;
+        if (isValidLightPos(world.getBlockState(feet))) return feet;
         BlockPos head = feet.above();
-        var headState = world.getBlockState(head);
-        if (headState.isAir() || headState.is(Blocks.LIGHT)) return head;
+        if (isValidLightPos(world.getBlockState(head))) return head;
         return null;
     }
 
     public static void clearLightBlock(ServerLevel world, BlockPos pos) {
-        if (world.getBlockState(pos).is(Blocks.LIGHT)) {
-            world.setBlock(pos, Blocks.AIR.defaultBlockState(), 3);
-        }
+        BlockState state = world.getBlockState(pos);
+        if (!state.is(Blocks.LIGHT)) return;
+        BlockState replacement = state.getValue(BlockStateProperties.WATERLOGGED)
+                ? Fluids.WATER.defaultFluidState().createLegacyBlock()
+                : Blocks.AIR.defaultBlockState();
+        world.setBlock(pos, replacement, 3);
     }
 
     private static void placeLightBlock(ServerLevel world, BlockPos pos, int level) {
+        boolean inWater = world.getFluidState(pos).getType() == Fluids.WATER;
         world.setBlock(pos, Blocks.LIGHT.defaultBlockState()
-                .setValue(LightBlock.LEVEL, level), 3);
+                .setValue(LightBlock.LEVEL, level)
+                .setValue(BlockStateProperties.WATERLOGGED, inWater), 3);
     }
 
 }
