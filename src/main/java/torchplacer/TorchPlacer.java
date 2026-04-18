@@ -46,13 +46,12 @@ public class TorchPlacer implements ModInitializer {
                     ServerLevel world = (ServerLevel) player.level();
                     BlockPos pos = player.blockPosition();
                     int blockLight = world.getBrightness(LightLayer.BLOCK, pos);
-                    int skyLight  = world.getBrightness(LightLayer.SKY, pos);
                     TorchPlacerConfig config = TorchPlacerNetwork.PLAYER_CONFIGS.getOrDefault(
                             player.getUUID(), new TorchPlacerConfig());
                     String willPlace = blockLight <= config.lightThreshold ? "yes" : "no";
                     ctx.getSource().sendSuccess(() -> Component.literal(String.format(
-                            "Block light: %d | Sky light: %d | Auto-placer would place here: %s",
-                            blockLight, skyLight, willPlace)), false);
+                            "Block light: %d | Auto-placer would place here: %s",
+                            blockLight, willPlace)), false);
                     return 1;
                 }));
         });

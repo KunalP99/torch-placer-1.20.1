@@ -5,7 +5,7 @@
 ### Commands
 - Added `/torchesplaced` command — shows how many torches you have placed in this world (both manually and by the auto-placer). The count persists across death, logout, and server restarts
 - `/torchesplaced` message updated to read "You have placed X torches in this world." to reflect both placement types
-- Added `/torchlight` command — shows the block and sky light level at your position and whether the auto-placer would place a torch there
+- Added `/torchlight` command — shows the block light level at your position and whether the auto-placer would place a torch there
 
 ### Config Screen
 - Added a **HUD Counter** toggle to the settings screen — turn the torch counter on or off without disabling the auto-placer
