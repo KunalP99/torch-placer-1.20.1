@@ -34,7 +34,7 @@ public class TorchPlacer implements ModInitializer {
                 .executes(ctx -> {
                     ServerPlayer player = ctx.getSource().getPlayerOrException();
                     long count = TorchStats.get(ctx.getSource().getServer()).getCount(player.getUUID());
-                    String msg = String.format("You have auto-placed %,d torch%s.",
+                    String msg = String.format("You have placed %,d torch%s in this world.",
                             count, count == 1 ? "" : "es");
                     ctx.getSource().sendSuccess(() -> Component.literal(msg), false);
                     return 1;
